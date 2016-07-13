@@ -2,7 +2,11 @@ package application.com.a30togo.freedom;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +24,17 @@ public class MainActivity extends Activity {
     private int tabIndex;
     private ViewPager mViewPager;
     private View mPagerView;
+    private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String result = (String) msg.getData().get("result");
+            String obj = (String) msg.obj;//
+            //activity_main_btn1.setText("请求结果为："+result);
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,10 @@ public class MainActivity extends Activity {
             public void onTabSelected(TabLayout.Tab tab) {
                 tabIndex = tab.getPosition();
                 mViewPager.setCurrentItem(tabIndex);
+                if (tabIndex == 1) {
+                    Thread accessWebServiceThread = new Thread(new WebServiceHandler());
+                    accessWebServiceThread.start();
+                }
             }
 
             @Override
@@ -87,6 +106,24 @@ public class MainActivity extends Activity {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
+        }
+
+    }
+
+    class WebServiceHandler implements Runnable{
+        @Override
+        public void run() {
+            instagramDownloader.download("");
+            Looper.prepare();
+            String result = "complete";
+            Message message = new Message();
+            Bundle bundle = new Bundle();
+            bundle.putString("result", result);
+            message.what = ANDROID_ACCESS_INSTAGRAM_WEBSERVICES;//设置消息标示
+            message.obj = "zxn";
+            message.setData(bundle);//消息内容
+            handler.sendMessage(message);//发送消息
+            Looper.loop();
         }
 
     }
