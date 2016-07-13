@@ -29,8 +29,8 @@ public class MainActivity extends Activity {
         mTabs.addTab(mTabs.newTab().setText("Download IG Pic"));
         mTabs.addTab(mTabs.newTab().setText("Stored Pictures"));
         mTabs.addTab(mTabs.newTab().setText("Easy Download"));
-        mTabs.setSelectedTabIndicatorColor(Color.BLUE);
-        mTabs.setTabTextColors(Color.GRAY,Color.BLUE);
+        mTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorInstagram));
+        mTabs.setTabTextColors(Color.GRAY,getResources().getColor(R.color.colorInstagram));
 
         mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

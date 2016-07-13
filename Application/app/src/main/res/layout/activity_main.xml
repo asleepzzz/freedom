@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#00ff00">
+            android:background="@color/colorInstagramTitle">
             </TextView>>
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
