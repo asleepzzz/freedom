@@ -1,14 +1,17 @@
 package application.com.a30togo.freedom;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -16,6 +19,7 @@ public class MainActivity extends Activity {
     private android.support.design.widget.TabLayout mTabs;
     private int tabIndex;
     private ViewPager mViewPager;
+    private View mPagerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,14 @@ public class MainActivity extends Activity {
         mTabs.addTab(mTabs.newTab().setText("Download IG Pic"));
         mTabs.addTab(mTabs.newTab().setText("Stored Pictures"));
         mTabs.addTab(mTabs.newTab().setText("Easy Download"));
+        mTabs.setSelectedTabIndicatorColor(Color.BLUE);
+        mTabs.setTabTextColors(Color.GRAY,Color.BLUE);
+
         mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tabIndex = tab.getPosition();
-                Log.e("kevin","index "+tab.getPosition());
+                mViewPager.setCurrentItem(tabIndex);
             }
 
             @Override
@@ -71,6 +78,7 @@ public class MainActivity extends Activity {
         public Object instantiateItem(ViewGroup container, int position) {
             View view = getLayoutInflater().inflate(R.layout.pager_item,
                     container, false);
+            mPagerView = view;
             container.addView(view);
             TextView title = (TextView) view.findViewById(R.id.item_title);
             title.setText(String.valueOf(position + 1));
