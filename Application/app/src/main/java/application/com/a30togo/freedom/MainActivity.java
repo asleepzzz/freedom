@@ -9,14 +9,19 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.EdgeEffectCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -24,6 +29,8 @@ public class MainActivity extends Activity {
     private int tabIndex;
     private ViewPager mViewPager;
     private View mPagerView;
+    private EditText editText;
+    private Button okBtn;
     private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
 
     private Handler handler = new Handler(){
@@ -31,6 +38,9 @@ public class MainActivity extends Activity {
         public void handleMessage(Message msg) {
             String result = (String) msg.getData().get("result");
             String obj = (String) msg.obj;//
+            if (result.equals("complete")) {
+                Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
+            }
             //activity_main_btn1.setText("请求结果为："+result);
         }
 
@@ -47,14 +57,16 @@ public class MainActivity extends Activity {
         mTabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorInstagram));
         mTabs.setTabTextColors(Color.GRAY,getResources().getColor(R.color.colorInstagram));
 
+
+
         mTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 tabIndex = tab.getPosition();
                 mViewPager.setCurrentItem(tabIndex);
                 if (tabIndex == 1) {
-                    Thread accessWebServiceThread = new Thread(new WebServiceHandler());
-                    accessWebServiceThread.start();
+//                    Thread accessWebServiceThread = new Thread(new WebServiceHandler());
+//                    accessWebServiceThread.start();
                 }
             }
 
@@ -100,7 +112,26 @@ public class MainActivity extends Activity {
             mPagerView = view;
             container.addView(view);
             TextView title = (TextView) view.findViewById(R.id.item_title);
-            title.setText(String.valueOf(position + 1));
+
+            LinearLayout instagram_download = (LinearLayout)mPagerView.findViewById(R.id.instagram_download);
+            if (position == 0) {
+                instagram_download.setVisibility(View.VISIBLE);
+                title.setVisibility(View.GONE);
+                editText = (EditText) mPagerView.findViewById(R.id.inputUrl);
+
+                okBtn = (Button) mPagerView.findViewById(R.id.save_button);
+                okBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Thread accessWebServiceThread = new Thread(new WebServiceHandler(editText.getText().toString()));
+                        accessWebServiceThread.start();
+                    }
+                });
+            } else {
+                instagram_download.setVisibility(View.GONE);
+                title.setVisibility(View.VISIBLE);
+                title.setText("not yet developed");
+            }
             return view;
         }
         @Override
@@ -111,9 +142,14 @@ public class MainActivity extends Activity {
     }
 
     class WebServiceHandler implements Runnable{
+
+        private String igUrl;
+        public WebServiceHandler (String url) {
+            igUrl = url;
+        }
         @Override
         public void run() {
-            instagramDownloader.download("", getApplicationContext());
+            instagramDownloader.download(igUrl, getApplicationContext());
             Looper.prepare();
             String result = "complete";
             Message message = new Message();

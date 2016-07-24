@@ -5,17 +5,45 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <LinearLayout
+        android:id="@+id/instagram_download"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
     <TextView
         android:id="@+id/item_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Page:"/>
+        android:text="Please Input Instagram Photo Url:"/>
 
+    <EditText
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputUrl"
+        android:maxLines="2"
+        />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Photo"
+        android:textColor="#ffffff"
+        android:textSize="30sp"
+        android:background="#0066aa"/>
+    </LinearLayout>
     <TextView
         android:id="@+id/item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="80sp" />
+        android:textSize="40sp"
+        android:visibility="gone"/>
 
 </LinearLayout>

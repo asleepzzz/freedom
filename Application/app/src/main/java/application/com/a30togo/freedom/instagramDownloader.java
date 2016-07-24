@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,10 +31,10 @@ import java.net.URL;
  * Created by jeromehuang on 7/13/16.
  */
 public class instagramDownloader {
-    private static int downloaded_cnt;
+    private static int downloaded_cnt ;
 
     public static void download (String url, Context ctx) {
-        String parsinguRL = "https://www.instagram.com/p/BFsr8QwwZEV/";
+        String parsinguRL = url;//"https://www.instagram.com/p/BFsr8QwwZEV/";
 
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
         HttpGet httpget = new HttpGet(parsinguRL); // Set the action you want to do
@@ -72,7 +73,7 @@ public class instagramDownloader {
 
 
                     String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                            "/Kevin";
+                            "/IGDownloader";
                     File dir = new File(file_path);
                     if(!dir.exists())
                         dir.mkdirs();
@@ -86,7 +87,6 @@ public class instagramDownloader {
                     fOut.close();
                     imageBitmap.recycle();
                     notifyMeidaStore(file, ctx);
-
                 }
             }
         } catch (IOException e) {
