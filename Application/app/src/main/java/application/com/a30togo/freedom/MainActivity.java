@@ -113,7 +113,7 @@ public class MainActivity extends Activity {
     class WebServiceHandler implements Runnable{
         @Override
         public void run() {
-            instagramDownloader.download("");
+            instagramDownloader.download("", getApplicationContext());
             Looper.prepare();
             String result = "complete";
             Message message = new Message();

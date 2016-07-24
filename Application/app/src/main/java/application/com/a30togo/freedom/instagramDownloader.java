@@ -1,8 +1,13 @@
 package application.com.a30togo.freedom;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -27,7 +32,7 @@ import java.net.URL;
 public class instagramDownloader {
     private static int downloaded_cnt;
 
-    public static void download (String url) {
+    public static void download (String url, Context ctx) {
         String parsinguRL = "https://www.instagram.com/p/BFsr8QwwZEV/";
 
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
@@ -73,12 +78,14 @@ public class instagramDownloader {
                         dir.mkdirs();
                     File file = new File(dir, downloaded_cnt+ ".png");
                     downloaded_cnt++;
+
                     FileOutputStream fOut = new FileOutputStream(file);
 
                     imageBitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
                     fOut.flush();
                     fOut.close();
                     imageBitmap.recycle();
+                    notifyMeidaStore(file, ctx);
 
                 }
             }
@@ -111,6 +118,25 @@ public class instagramDownloader {
         {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    private static void notifyMeidaStore(File photoFile, Context context) {
+        if(context != null) {
+            try {
+                ContentValues intent = new ContentValues(2);
+                intent.put("mime_type", "image/png");
+                intent.put("_data", photoFile.getAbsolutePath());
+                intent.put("datetaken", Long.valueOf(photoFile.lastModified()));
+                context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, intent);
+            } catch (Exception var3) {
+                ;
+            }
+
+            Intent intent1 = new Intent("android.intent.action.MEDIA_SCANNER_SCAN_FILE");
+            intent1.setData(Uri.fromFile(photoFile));
+            context.sendBroadcast(intent1);
         }
     }
 
