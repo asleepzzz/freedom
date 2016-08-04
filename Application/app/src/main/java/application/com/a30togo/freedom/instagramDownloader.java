@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -140,4 +141,15 @@ public class instagramDownloader {
         }
     }
 
+
+    public static boolean isIGUrl (String url) {
+        if (TextUtils.isEmpty(url)) {
+            return false;
+        }
+
+        if (url.contains("https://www.instagram.com")) {
+            return true;
+        }
+        return false;
+    }
 }

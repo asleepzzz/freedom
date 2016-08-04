@@ -13,6 +13,7 @@ import android.support.v4.widget.EdgeEffectCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,8 +127,14 @@ public class MainActivity extends Activity {
                 okBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Thread accessWebServiceThread = new Thread(new WebServiceHandler(editText.getText().toString()));
-                        accessWebServiceThread.start();
+
+                        if (!instagramDownloader.isIGUrl(editText.getText().toString())) {
+                            Toast.makeText(getApplicationContext(),"please input correct url",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(),"downloading",Toast.LENGTH_SHORT).show();
+                            Thread accessWebServiceThread = new Thread(new WebServiceHandler(editText.getText().toString()));
+                            accessWebServiceThread.start();
+                        }
                     }
                 });
             } else {
