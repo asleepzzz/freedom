@@ -42,6 +42,6 @@
         <ListView android:id="@+id/left_drawer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#111"/>
+            android:background="#ffffff"/>
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

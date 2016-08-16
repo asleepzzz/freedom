@@ -18,11 +18,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +40,9 @@ public class MainActivity extends Activity {
     private ImageButton mRefresh;
     private GridView mGrid;
     private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
+    private ListView mDrawerList;
 
+    private String[] mPlanetTitles;
 
     private TextView title ;
     private LinearLayout instagram_download ;
@@ -88,6 +92,14 @@ public class MainActivity extends Activity {
 
             }
         });
+
+        mPlanetTitles = new String[]{"this app can help you to download instagram picture"};//, "two", "three"};
+
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mPlanetTitles));
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
