@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorInstagram">#0F3568</color>
     <color name="colorInstagramTitle">#2e5b82</color>
+    <color name="blue">#0000ff</color>
+    <color name="white">#ffffff</color>
 </resources>

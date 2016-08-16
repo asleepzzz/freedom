@@ -5,6 +5,20 @@
     android:orientation="vertical"
     android:gravity="center">
 
+    <GridView
+        android:id="@+id/gridview"
+        android:visibility="gone"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:drawSelectorOnTop="true"
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:focusable="true"
+        android:verticalSpacing="5dp"
+        android:stretchMode="columnWidth" />
     <LinearLayout
         android:id="@+id/instagram_download"
         android:layout_width="match_parent"

@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -33,7 +34,9 @@ public class MainActivity extends Activity {
     private View mPagerView;
     private EditText editText;
     private Button okBtn;
+    private GridView mGrid;
     private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
+
 
     private Handler handler = new Handler(){
         @Override
@@ -85,10 +88,10 @@ public class MainActivity extends Activity {
             }
         });
 
-
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(new SamplePagerAdapter());
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
+
     }
 
     class SamplePagerAdapter extends PagerAdapter {
@@ -118,9 +121,11 @@ public class MainActivity extends Activity {
             TextView title = (TextView) view.findViewById(R.id.item_title);
 
             LinearLayout instagram_download = (LinearLayout)mPagerView.findViewById(R.id.instagram_download);
+            mGrid = (GridView)mPagerView.findViewById(R.id.gridview);
             if (position == 0) {
                 instagram_download.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
+                mGrid.setVisibility(View.GONE);
                 editText = (EditText) mPagerView.findViewById(R.id.inputUrl);
 
                 okBtn = (Button) mPagerView.findViewById(R.id.save_button);
@@ -137,8 +142,15 @@ public class MainActivity extends Activity {
                         }
                     }
                 });
+            } else if (position == 1) {
+                instagram_download.setVisibility(View.GONE);
+                title.setVisibility(View.GONE);
+                mGrid.setVisibility(View.VISIBLE);
+                showSdcardAlbum.show(MainActivity.this,mGrid);
+
             } else {
                 instagram_download.setVisibility(View.GONE);
+                mGrid.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 title.setText("not yet developed");
             }
