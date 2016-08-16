@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -34,9 +35,13 @@ public class MainActivity extends Activity {
     private View mPagerView;
     private EditText editText;
     private Button okBtn;
+    private ImageButton mRefresh;
     private GridView mGrid;
     private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
 
+
+    private TextView title ;
+    private LinearLayout instagram_download ;
 
     private Handler handler = new Handler(){
         @Override
@@ -71,10 +76,6 @@ public class MainActivity extends Activity {
             public void onTabSelected(TabLayout.Tab tab) {
                 tabIndex = tab.getPosition();
                 mViewPager.setCurrentItem(tabIndex);
-                if (tabIndex == 1) {
-//                    Thread accessWebServiceThread = new Thread(new WebServiceHandler());
-//                    accessWebServiceThread.start();
-                }
             }
 
             @Override
@@ -118,13 +119,15 @@ public class MainActivity extends Activity {
                     container, false);
             mPagerView = view;
             container.addView(view);
-            TextView title = (TextView) view.findViewById(R.id.item_title);
+            title = (TextView) view.findViewById(R.id.item_title);
 
-            LinearLayout instagram_download = (LinearLayout)mPagerView.findViewById(R.id.instagram_download);
+            instagram_download = (LinearLayout)mPagerView.findViewById(R.id.instagram_download);
             mGrid = (GridView)mPagerView.findViewById(R.id.gridview);
+            mRefresh = (ImageButton)mPagerView.findViewById(R.id.refreshIcon);
             if (position == 0) {
                 instagram_download.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
+                mRefresh.setVisibility(View.GONE);
                 mGrid.setVisibility(View.GONE);
                 editText = (EditText) mPagerView.findViewById(R.id.inputUrl);
 
@@ -144,12 +147,19 @@ public class MainActivity extends Activity {
                 });
             } else if (position == 1) {
                 instagram_download.setVisibility(View.GONE);
+                mRefresh.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
                 mGrid.setVisibility(View.VISIBLE);
                 showSdcardAlbum.show(MainActivity.this,mGrid);
-
+                mRefresh.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showSdcardAlbum.refresh(MainActivity.this,mGrid);
+                    }
+                });
             } else {
                 instagram_download.setVisibility(View.GONE);
+                mRefresh.setVisibility(View.GONE);
                 mGrid.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 title.setText("not yet developed");
