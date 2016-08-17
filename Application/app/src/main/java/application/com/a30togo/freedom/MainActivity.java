@@ -146,18 +146,21 @@ public class MainActivity extends Activity {
                 mRefresh.setVisibility(View.GONE);
                 mGrid.setVisibility(View.GONE);
                 editText = (EditText) mPagerView.findViewById(R.id.inputUrl);
+                if (showSdcardAlbum.imageItems.size()==0) {
+                    editText.setText("https://www.instagram.com/p/BFsr8QwwZEV/");
+                }
 
                 okBtn = (Button) mPagerView.findViewById(R.id.save_button);
                 okBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         if (!instagramDownloader.isIGUrl(editText.getText().toString())) {
                             Toast.makeText(getApplicationContext(),"please input correct url",Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(),"downloading",Toast.LENGTH_SHORT).show();
                             Thread accessWebServiceThread = new Thread(new WebServiceHandler(editText.getText().toString()));
                             accessWebServiceThread.start();
+                            editText.setText("");
                         }
                     }
                 });
