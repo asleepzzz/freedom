@@ -54,6 +54,7 @@ public class MainActivity extends Activity {
             String obj = (String) msg.obj;//
             if (result.equals("complete")) {
                 Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
+                showSdcardAlbum.refresh(MainActivity.this,mGrid);
             }
             //activity_main_btn1.setText("请求结果为："+result);
         }
@@ -80,6 +81,9 @@ public class MainActivity extends Activity {
             public void onTabSelected(TabLayout.Tab tab) {
                 tabIndex = tab.getPosition();
                 mViewPager.setCurrentItem(tabIndex);
+                if (tabIndex==1) {
+                    //Log.e("kevin","press update");
+                }
             }
 
             @Override

@@ -78,6 +78,9 @@ public class showSdcardAlbum {
                                                     mCtx.startActivity(intent);
                                                 }
                                             });
+        } else {
+            gridAdapter = new GridViewAdapter(mCtx, R.layout.grid_item_layout, imageItems);
+            gridView.setAdapter(gridAdapter);
         }
 
     }
@@ -112,23 +115,24 @@ public class showSdcardAlbum {
                     imageItems.add(new ImageItem(bitMapObj, "Image#" + i));
                 }
             }
+
+            gridAdapter.notifyDataSetChanged();
+            //gridAdapter = new GridViewAdapter(mCtx, R.layout.grid_item_layout, imageItems);
+
+
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    ImageItem item = (ImageItem) parent.getItemAtPosition(position);
+                    //Create intent
+                    Intent intent = new Intent(mCtx, DetailsActivity.class);
+                    intent.putExtra("title", item.getTitle());
+                    //intent.putExtra("image", item.getImage());
+
+                    //Start details activity
+                    mCtx.startActivity(intent);
+                }
+            });
         }
-
-        gridAdapter = new GridViewAdapter(mCtx, R.layout.grid_item_layout, imageItems);
-        gridAdapter.notifyDataSetChanged();
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ImageItem item = (ImageItem) parent.getItemAtPosition(position);
-                //Create intent
-                Intent intent = new Intent(mCtx, DetailsActivity.class);
-                intent.putExtra("title", item.getTitle());
-                //intent.putExtra("image", item.getImage());
-
-                //Start details activity
-                mCtx.startActivity(intent);
-            }
-        });
     }
 
 
