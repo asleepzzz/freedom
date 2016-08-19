@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
             String result = (String) msg.getData().get("result");
             String obj = (String) msg.obj;//
             if (result.equals("complete")) {
-                Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
                 showSdcardAlbum.refresh(MainActivity.this,mGrid);
             }
             //activity_main_btn1.setText("请求结果为："+result);
@@ -162,7 +162,7 @@ public class MainActivity extends Activity {
                         if (!instagramDownloader.isIGUrl(editText.getText().toString())) {
                             Toast.makeText(getApplicationContext(),"please input correct url",Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getApplicationContext(),"downloading",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"downloading",Toast.LENGTH_SHORT).show();
                             Thread accessWebServiceThread = new Thread(new WebServiceHandler(editText.getText().toString()));
                             accessWebServiceThread.start();
                             editText.setText("");
@@ -186,7 +186,8 @@ public class MainActivity extends Activity {
                 mRefresh.setVisibility(View.GONE);
                 mGrid.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
-                title.setText("not yet developed");
+                title.setText("Just Press Copy Url in Instagram app, you can find the picture in album");
+                title.setTextSize(13);
             }
             return view;
         }

@@ -34,7 +34,9 @@ import java.net.URL;
 public class instagramDownloader {
     private static int downloaded_cnt ;
 
-    public static void download (String url, Context ctx) {
+    public static synchronized void download (String url, Context ctx) {
+        Toast.makeText(ctx,"downloading",Toast.LENGTH_SHORT).show();
+
         String parsinguRL = url;//"https://www.instagram.com/p/BFsr8QwwZEV/";
 
         HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
@@ -66,8 +68,8 @@ public class instagramDownloader {
                 if (line.contains("og:image")) {
                     String picUrl = line.substring(line.indexOf("content=")+9,line.indexOf("/>")-2);
 
-                    Log.e("kevin"," "+line);
-                    Log.e("kevin","url: "+picUrl);
+                    //Log.e("kevin"," "+line);
+                    //Log.e("kevin","url: "+picUrl);
                     Bitmap imageBitmap = null;
                     URL imageURL = new URL(picUrl);
                     imageBitmap = getBitmapFromURL(picUrl);
@@ -88,6 +90,7 @@ public class instagramDownloader {
                     fOut.close();
                     imageBitmap.recycle();
                     notifyMeidaStore(file, ctx);
+                    Toast.makeText(ctx,"download complete",Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (IOException e) {

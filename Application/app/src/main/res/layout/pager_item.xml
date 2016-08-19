@@ -63,9 +63,12 @@
     </LinearLayout>
     <TextView
         android:id="@+id/item_title"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40sp"
+        android:maxLines="5"
         android:visibility="gone"/>
 
 </LinearLayout>
