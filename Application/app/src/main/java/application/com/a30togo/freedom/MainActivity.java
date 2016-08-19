@@ -1,6 +1,9 @@
 package application.com.a30togo.freedom;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -109,6 +112,8 @@ public class MainActivity extends Activity {
         mViewPager.setAdapter(new SamplePagerAdapter());
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
 
+
+        ClipService.startMyIntentService(getApplicationContext());
     }
 
     class SamplePagerAdapter extends PagerAdapter {
