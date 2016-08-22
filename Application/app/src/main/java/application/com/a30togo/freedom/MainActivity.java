@@ -23,11 +23,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,7 @@ public class MainActivity extends Activity {
     private GridView mGrid;
     private int ANDROID_ACCESS_INSTAGRAM_WEBSERVICES = 001;
     private ListView mDrawerList;
+    private Switch mSwitch;
 
     private String[] mPlanetTitles;
 
@@ -141,6 +144,7 @@ public class MainActivity extends Activity {
             mPagerView = view;
             container.addView(view);
             title = (TextView) view.findViewById(R.id.item_title);
+            mSwitch = (Switch) view.findViewById(R.id.mySwitch);
 
             instagram_download = (LinearLayout)mPagerView.findViewById(R.id.instagram_download);
             mGrid = (GridView)mPagerView.findViewById(R.id.gridview);
@@ -149,6 +153,7 @@ public class MainActivity extends Activity {
                 instagram_download.setVisibility(View.VISIBLE);
                 title.setVisibility(View.GONE);
                 mRefresh.setVisibility(View.GONE);
+                mSwitch.setVisibility(View.GONE);
                 mGrid.setVisibility(View.GONE);
                 editText = (EditText) mPagerView.findViewById(R.id.inputUrl);
                 if (showSdcardAlbum.imageItems.size()==0) {
@@ -172,6 +177,7 @@ public class MainActivity extends Activity {
             } else if (position == 1) {
                 instagram_download.setVisibility(View.GONE);
                 mRefresh.setVisibility(View.VISIBLE);
+                mSwitch.setVisibility(View.GONE);
                 title.setVisibility(View.GONE);
                 mGrid.setVisibility(View.VISIBLE);
                 showSdcardAlbum.show(MainActivity.this,mGrid);
@@ -184,10 +190,22 @@ public class MainActivity extends Activity {
             } else {
                 instagram_download.setVisibility(View.GONE);
                 mRefresh.setVisibility(View.GONE);
+                mSwitch.setVisibility(View.VISIBLE);
                 mGrid.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 title.setText("Just Press Copy Url in Instagram app, you can find the picture in album");
                 title.setTextSize(13);
+
+                mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        if (b) {
+                            ClipService.enableMyIntentService(getApplicationContext());
+                        } else {
+                            ClipService.disableMyIntentService(getApplicationContext());
+                        }
+                    }
+                });
             }
             return view;
         }

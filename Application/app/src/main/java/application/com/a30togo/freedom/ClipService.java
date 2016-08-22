@@ -14,6 +14,8 @@ import android.util.Log;
  */
 public class ClipService extends IntentService {
     static Context mCtx;
+    static boolean isEnabled;
+
     public ClipService() {
         super("ClipService");
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -29,7 +31,7 @@ public class ClipService extends IntentService {
 
                 ClipData.Item item = clipData.getItemAt(0);
                 String url  = item.getText().toString();
-                if (instagramDownloader.isIGUrl(url)) {
+                if (instagramDownloader.isIGUrl(url) && isEnabled) {
                     instagramDownloader.download(url,mCtx);
                 }
                 //Log.e("kevin", " " + item.getText());
@@ -57,5 +59,13 @@ public class ClipService extends IntentService {
 
         //intent.putExtra("url",url);
         mContext.startService(intent);
+    }
+
+    public static void disableMyIntentService(Context mContext ){
+        isEnabled = false;
+    }
+
+    public static void enableMyIntentService(Context mContext ){
+        isEnabled = true;
     }
 }

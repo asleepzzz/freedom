@@ -13,6 +13,14 @@
         android:gravity="top"
         android:background="@drawable/refresh">
 </ImageButton>>
+
+    <Switch
+        android:id="@+id/mySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:text="Enable Quick Download" />
     <GridView
         android:id="@+id/gridview"
         android:visibility="gone"
