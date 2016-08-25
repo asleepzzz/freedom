@@ -3,6 +3,7 @@ package application.com.a30togo.freedom;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -33,6 +34,51 @@ import java.net.URL;
  */
 public class instagramDownloader {
     private static int downloaded_cnt ;
+    static String count_key = "count";
+    static String val = "val";
+
+
+    public static int getPreviousInstallCount() {
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() +
+                "/IGDownloader";
+        File dir = new File(file_path);
+        if(dir.exists()) {
+            File[] listFile;
+            String[] FilePathStrings;
+            String[] FileNameStrings;
+            int maxIndex = -1;
+
+            listFile = dir.listFiles();
+            if (listFile.length > 0) {
+                FilePathStrings = new String[listFile.length];
+                FileNameStrings = new String[listFile.length];
+                for (int i = 0; i < listFile.length; i++) {
+                    FilePathStrings[i] = listFile[i].getAbsolutePath();
+                    FileNameStrings[i] = listFile[i].getName();
+
+                    int index = Integer.parseInt(FileNameStrings[i].replace(".png",""));
+                    if (index > maxIndex) {
+                        maxIndex = index;
+                    }
+                }
+                return maxIndex+1;
+            }
+        }
+        return -1;
+    }
+
+    public static void setCnt(Context ctx,int count) {
+        SharedPreferences.Editor editor = ctx.getSharedPreferences(count_key, Context.MODE_PRIVATE).edit();
+        editor.putInt(val,count).commit();
+        downloaded_cnt = count;
+    }
+
+//    public static int getCnt(Context ctx) {
+//        SharedPreferences prefs = ctx.getSharedPreferences(count_key, Context.MODE_PRIVATE);
+//        int tmp = prefs.getInt(val,0);
+//        downloaded_cnt = tmp;
+//        return tmp;
+//    }
 
     public static synchronized void download (String url, Context ctx) {
         Toast.makeText(ctx,"downloading",Toast.LENGTH_SHORT).show();

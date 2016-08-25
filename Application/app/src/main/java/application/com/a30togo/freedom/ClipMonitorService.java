@@ -33,6 +33,10 @@ public class ClipMonitorService extends Service {
         SharedPreferences prefs = getSharedPreferences(isEnabled, MODE_PRIVATE);
         isEverEnabled = prefs.getBoolean(val,false);
 
+        int previousInstallIndex = instagramDownloader.getPreviousInstallCount();
+        if (previousInstallIndex!= -1) {
+            instagramDownloader.setCnt(mCtx,previousInstallIndex);
+        }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -56,13 +60,13 @@ public class ClipMonitorService extends Service {
     }
 
     public static void disableMyIntentService(Context mContext ){
-        SharedPreferences.Editor editor = mContext.getSharedPreferences("isEnabled", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = mContext.getSharedPreferences(isEnabled, MODE_PRIVATE).edit();
         editor.putBoolean(val,false).commit();
         isEverEnabled = false;
     }
 
     public static void enableMyIntentService(Context mContext ){
-        SharedPreferences.Editor editor = mContext.getSharedPreferences("isEnabled", MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = mContext.getSharedPreferences(isEnabled, MODE_PRIVATE).edit();
         editor.putBoolean(val,true).commit();
         isEverEnabled = true;
     }
