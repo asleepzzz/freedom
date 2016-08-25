@@ -68,8 +68,7 @@ public class instagramDownloader {
                 if (line.contains("og:image")) {
                     String picUrl = line.substring(line.indexOf("content=")+9,line.indexOf("/>")-2);
 
-                    //Log.e("kevin"," "+line);
-                    //Log.e("kevin","url: "+picUrl);
+
                     Bitmap imageBitmap = null;
                     URL imageURL = new URL(picUrl);
                     imageBitmap = getBitmapFromURL(picUrl);

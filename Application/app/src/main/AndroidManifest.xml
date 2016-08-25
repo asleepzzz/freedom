@@ -3,6 +3,7 @@
     package="application.com.a30togo.freedom">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/instagram_launcher"
@@ -20,7 +21,12 @@
 
         <activity android:name=".DetailsActivity">
         </activity>
-        <service android:enabled="true" android:name=".ClipService" />
+        <service android:enabled="true" android:name=".ClipMonitorService"/>
+        <receiver android:name=".RastreadorBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -116,7 +116,7 @@ public class MainActivity extends Activity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
 
 
-        ClipService.startMyIntentService(getApplicationContext());
+        ClipMonitorService.startMyIntentService(getApplicationContext());
     }
 
     class SamplePagerAdapter extends PagerAdapter {
@@ -200,9 +200,9 @@ public class MainActivity extends Activity {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                         if (b) {
-                            ClipService.enableMyIntentService(getApplicationContext());
+                            ClipMonitorService.enableMyIntentService(getApplicationContext());
                         } else {
-                            ClipService.disableMyIntentService(getApplicationContext());
+                            ClipMonitorService.disableMyIntentService(getApplicationContext());
                         }
                     }
                 });
