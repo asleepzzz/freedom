@@ -196,6 +196,8 @@ public class MainActivity extends Activity {
                 title.setText("Just Press Copy Url in Instagram app, you can find the picture in album");
                 title.setTextSize(13);
 
+
+                mSwitch.setChecked(ClipMonitorService.isIsEverEnabled(getApplicationContext()));
                 mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

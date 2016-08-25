@@ -67,6 +67,12 @@ public class ClipMonitorService extends Service {
         isEverEnabled = true;
     }
 
+    public static boolean isIsEverEnabled(Context mContext ){
+        SharedPreferences prefs = mContext.getSharedPreferences(isEnabled, MODE_PRIVATE);
+        isEverEnabled = prefs.getBoolean(val,false);
+        return isEverEnabled;
+    }
+
 
     public static void startMyIntentService(Context mContext ){
         mCtx = mContext;
