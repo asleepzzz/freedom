@@ -59,7 +59,7 @@ public class MainActivity extends Activity {
             String result = (String) msg.getData().get("result");
             String obj = (String) msg.obj;//
             if (result.equals("complete")) {
-                //Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"download complete",Toast.LENGTH_SHORT).show();
                 showSdcardAlbum.refresh(MainActivity.this,mGrid);
             }
             //activity_main_btn1.setText("请求结果为："+result);
@@ -226,8 +226,9 @@ public class MainActivity extends Activity {
         }
         @Override
         public void run() {
-            instagramDownloader.download(igUrl, getApplicationContext());
             Looper.prepare();
+            Toast.makeText(getApplicationContext(),"downloading",Toast.LENGTH_SHORT).show();
+            instagramDownloader.download(igUrl, getApplicationContext(),true);
             String result = "complete";
             Message message = new Message();
             Bundle bundle = new Bundle();

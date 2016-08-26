@@ -80,8 +80,10 @@ public class instagramDownloader {
 //        return tmp;
 //    }
 
-    public static synchronized void download (String url, Context ctx) {
-        Toast.makeText(ctx,"downloading",Toast.LENGTH_SHORT).show();
+    public static synchronized void download (String url, Context ctx, boolean isFromUI) {
+        if (!isFromUI) {
+            Toast.makeText(ctx, "downloading", Toast.LENGTH_SHORT).show();
+        }
 
         String parsinguRL = url;//"https://www.instagram.com/p/BFsr8QwwZEV/";
 
@@ -135,7 +137,9 @@ public class instagramDownloader {
                     fOut.close();
                     imageBitmap.recycle();
                     notifyMeidaStore(file, ctx);
-                    Toast.makeText(ctx,"download complete",Toast.LENGTH_SHORT).show();
+                    if (!isFromUI) {
+                        Toast.makeText(ctx, "download complete", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         } catch (IOException e) {

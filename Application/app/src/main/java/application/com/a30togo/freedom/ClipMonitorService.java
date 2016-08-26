@@ -52,7 +52,7 @@ public class ClipMonitorService extends Service {
                 ClipData.Item item = clipData.getItemAt(0);
                 String url  = item.getText().toString();
                 if (instagramDownloader.isIGUrl(url) && isEverEnabled) {
-                    instagramDownloader.download(url,mCtx);
+                    instagramDownloader.download(url,mCtx, false);
                 }
             }
 
